@@ -1,8 +1,9 @@
 {
-    "name": "tp-premium",
+    "name": "themespond/premium",
     "description": "ThemesPond Premium",
     "keywords": ["themespond", "theme", "plugin", "premium toolkit"],
     "license": "GPL-3.0+",
+    "type": "php",
     "authors": [
         {
             "name": "ThemesPond",
@@ -16,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TP\\Premium\\": "themespond/src"
+            "ThemesPond\\Premium\\": "/src"
         },
         "files": []
     }
