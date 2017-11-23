@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ThemesPond\\Premium\\' => array('/src/includes'),
+    'ThemesPond\\Premium\\' => array('/src'),
 );

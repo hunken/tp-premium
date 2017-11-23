@@ -151,7 +151,7 @@ class Premium {
         if (is_array($data)) {
             extract($data);
         }
-        $base_premium = realpath(__DIR__ . '/tp-premium');
+        $base_premium = realpath(__DIR__);
         $template = $base_premium . '/templates/' . $slug . '.php';
         include $template;
     }

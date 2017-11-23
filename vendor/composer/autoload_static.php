@@ -16,7 +16,7 @@ class ComposerStaticInit3d6290330da826dd751a5cc9dd1a4a30
     public static $prefixDirsPsr4 = array (
         'ThemesPond\\Premium\\' => 
         array (
-            0 => '/src/includes',
+            0 => '/src',
         ),
     );
 
