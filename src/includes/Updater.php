@@ -1,7 +1,6 @@
 <?php
 
-namespace TP\Premium;
-
+namespace ThemesPond\Premium;
 
 class Updater {
     /**

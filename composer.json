@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ThemesPond\\Premium\\": "/src"
+            "ThemesPond\\Premium\\": "/src/includes"
         },
         "files": []
     }
