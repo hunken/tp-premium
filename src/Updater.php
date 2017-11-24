@@ -32,6 +32,12 @@ class Updater {
     public $slug;
 
     /**
+     * @var Object
+     */
+    private $remoteInformation;
+
+
+    /**
      * Base API
      *
      * @var
@@ -110,16 +116,22 @@ class Updater {
     public function check_plugin_update($transient) {
         //p($transient);
         if (empty($transient->checked)) {
-            return $transient;
+            //return $transient;
         }
-        $remote_version = $this->getRemote_version();// Get the remote version
+        $this->remoteInformation = $this->getRemote_information();
+        p($this->remoteInformation);
+        $remote_version = $this->remoteInformation->new_version; // Get the remote version
         if (version_compare($this->current_version, $remote_version, '<')) {// If a newer version is available, add the update
             $obj = new \stdClass();
             $obj->slug = $this->slug;
             $obj->new_version = $remote_version;
             //$obj->url = $this->update_path;
-            $obj->url = $this->site;
-            $obj->package = $this->getRemote_package();
+            if(isset( $this->remoteInformation->product_page)){
+                $obj->url =  $this->remoteInformation->product_page;
+            }
+            if(isset($this->remoteInformation->package)) {
+                $obj->package = $this->remoteInformation->package;
+            }
             $transient->response[$this->plugin_slug] = $obj;
         }
         return $transient;
@@ -130,15 +142,24 @@ class Updater {
         if (empty($transient->checked)) {
             return $transient;
         }
+        $this->remoteInformation = $this->getRemote_information();
         // Get the remote version
         $remote_version = $this->getRemote_version();// Get the remote version
         if (version_compare($this->current_version, $remote_version, '<')) { // If a newer version is available, add the update
+            $url ="";
+            $package = "";
+            if(isset( $this->remoteInformation->product_page)){
+                $url =  $this->remoteInformation->product_page;
+            }
+            if(isset($this->remoteInformation->package)) {
+                $package = $this->remoteInformation->package;
+            }
             $transient->response = array(
                 $this->product_base => array(
                     'theme'       => $this->product_base,
                     'new_version' => $remote_version,
-                    'url'         => $this->update_path,
-                    'package'     => $this->getRemote_package()
+                    'url'         => $url,
+                    'package'     => $package
                 )
             );
         }
