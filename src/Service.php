@@ -19,10 +19,16 @@ class Service {
         $this->product = $base;
     }
 
+	/**
+	 * Validate product key
+	 *
+	 * @return json
+	 * @since 1.0.0
+	 */
     public function validate_service() {
         $email = esc_html($_POST['email']);
         $key = esc_html($_POST['key']);
-        $url = $this->service . 'product/activate';
+        $url = $this->service . 'product/validate';
         $data = array(
             'timeout' => 3000,
             'body'    => array(
@@ -45,6 +51,13 @@ class Service {
         wp_send_json_error(esc_html__('Service cannot established. ' . $status_code, 'tp-dashboard'));
     }
 
+	/**
+	 * Update premium data when product key validated success
+	 *
+	 * @param $email
+	 * @param $key
+	 * @since 1.0.0
+	 */
     private function create_license($email, $key) {
         $tp_premium_option = get_option('tp_premium_data');
         $tp_premium_option = json_decode($tp_premium_option, true);
@@ -58,6 +71,10 @@ class Service {
         update_option('tp_premium_data', $set_option);
     }
 
+	/**
+	 * Remove license product
+	 * @since 1.0.0
+	 */
     private function remove_license() {
         $tp_premium_option = get_option('tp_premium_data');
         $tp_premium_option = json_decode($tp_premium_option, true);

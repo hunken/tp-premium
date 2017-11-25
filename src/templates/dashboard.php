@@ -12,13 +12,13 @@
                            class="tp-input"
                            id="tpdb-email"
                            value="<?php
-                           echo $email; ?>" <?php if ($active):echo "disabled"; endif; ?>>
+                           echo $email; ?>" <?php if ($active):esc_html__("disabled", "tp-dashboard");  endif; ?>>
                     <div class="input-group-addon ion-email"></div>
                 </div>
                 <br/>
                 <div class="form-field input-group icon-left">
                     <input type="password" placeholder="Input your key" class="tp-input" id="tpdb-key" value="<?php
-                    echo $key; ?>" <?php if ($active):echo "disabled"; endif; ?>>
+                    echo esc_html($key); ?>" <?php if ($active):esc_html__("disabled", "tp-dashboard"); endif; ?>>
                     <div class="input-group-addon ion-key"></div>
                 </div>
                 <br/>
@@ -26,7 +26,7 @@
                 <button class="tp-btn-primary xs-mr-25" id="active-key"><?php echo esc_html__("Active", "tp-dashboard");
                     ?></button>
                     <button class="tp-btn-primary xs-mr-25"
-                            id="change-key"><?php echo esc_html__("Change lisence", "tp-dashboard");
+                            id="change-key"><?php echo esc_html__("Change license", "tp-dashboard");
                         ?></button><span class="spinner"></span>
                     </span>
             </div>

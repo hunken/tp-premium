@@ -67,7 +67,7 @@ class Updater {
 
         $this->plugin_slug = $product_base . "/" . $product_base . ".php";
         // FOR DEV
-        $this->plugin_slug = "tp-premium/tp-dashboard.php";
+        //$this->plugin_slug = "tp-premium/tp-dashboard.php";
 
         $this->slug = str_replace('.php', '', $this->plugin_slug);
 
@@ -114,14 +114,14 @@ class Updater {
      * @return object $ transient
      */
     public function check_plugin_update($transient) {
-        //p($transient);
+        p($transient);
         if (empty($transient->checked)) {
             //return $transient;
         }
         $this->remoteInformation = $this->getRemote_information();
-        p($this->remoteInformation);
         $remote_version = $this->remoteInformation->new_version; // Get the remote version
-        if (version_compare($this->current_version, $remote_version, '<')) {// If a newer version is available, add the update
+
+	    if (version_compare($this->current_version, $remote_version, '<')) {// If a newer version is available, add the update
             $obj = new \stdClass();
             $obj->slug = $this->slug;
             $obj->new_version = $remote_version;
@@ -137,14 +137,21 @@ class Updater {
         return $transient;
     }
 
-
+	/**
+     * Use for check theme update - set theme update
+     *
+	 * @param $transient
+	 * @return mixed
+     * @since 1.0.0
+	 */
     public function check_themes_update($transient) {
         if (empty($transient->checked)) {
+            p($transient);
             return $transient;
         }
         $this->remoteInformation = $this->getRemote_information();
         // Get the remote version
-        $remote_version = $this->getRemote_version();// Get the remote version
+        $remote_version = $this->remoteInformation->new_version;// Get the remote version
         if (version_compare($this->current_version, $remote_version, '<')) { // If a newer version is available, add the update
             $url ="";
             $package = "";
@@ -182,19 +189,6 @@ class Updater {
         return false;
     }
 
-    /**
-     * Return the remote version
-     *
-     * @return string $remote_version
-     */
-    public function getRemote_version() {
-        $request = wp_remote_get($this->update_path, array('body' => array('action' => 'version')));
-        if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200) {
-            return $request['body'];
-        }
-        return false;
-
-    }
 
     /**
      * Get information about the remote version
@@ -202,9 +196,9 @@ class Updater {
      * @return bool|object
      */
     public function getRemote_information() {
-        $request = wp_remote_get($this->update_path, array('body' => array('action' => 'info')));
+        $request = wp_remote_get($this->update_path);
         if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200) {
-            return unserialize($request['body']);
+            return json_decode($request['body']);
         }
         return false;
     }

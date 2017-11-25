@@ -24,8 +24,6 @@ class Premium {
         $this->license_base = $license_base;
         $this->license_url = $license_url;
 
-
-
         $this->hooks();
         $this->includes();
     }
@@ -40,26 +38,19 @@ class Premium {
     public function admin_scripts($hook) {
         $screen = get_current_screen();
 
+	    if ($this->license_type == 'plugin') {
+		    $page = $this->license_base . "_page_" . $this->license_base . '-license';
+	    }
 
-        $page = 'settings_page_' . $this->license_base . '-license';
-        if ($this->license_type == 'plugin') {
-            $page = $this->license_base . "_page_" . $this->license_base . '-license';
-        }
-
-        //p($page);
-        //
-        //p($screen->id);
-        //die();
-
-
-
-        if ($screen->id == $page) {
-            wp_enqueue_script('tp-dashboard-admin-js', $this->license_url . 'assets/js/scripts.js', array(), $this->product_version,
-                true);
-            wp_enqueue_style('tp-dashboard-css', $this->license_url . 'assets/css/style.css', array(),
-                $this->product_version);
-            wp_localize_script('tp-dashboard-admin-js', 'tp_dashboard_admin_js', array('ajax_url' => admin_url('admin-ajax.php')));
-        }
+	    if ($screen->id == $page) {
+		    wp_enqueue_script('tp-dashboard-admin-js', $this->license_url . '/vendor/themespond/premium/src/assets/js/scripts.js',
+			    array(),
+			    $this->product_version,
+			    true);
+		    wp_enqueue_style('tp-dashboard-css', $this->license_url . '/vendor/themespond/premium/src/assets/css/style.css', array(),
+			    $this->product_version);
+		    wp_localize_script('tp-dashboard-admin-js', 'tp_dashboard_admin_js', array('ajax_url' => admin_url('admin-ajax.php')));
+	    }
     }
 
     /**
@@ -107,7 +98,6 @@ class Premium {
                 array($this, 'plugin_load')
             );
         }
-
     }
 
     /**
